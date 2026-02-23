@@ -27,17 +27,11 @@ def _normalize_numbered_list(text: str) -> str:
 def build_chain(api_key: str):
     """Build the RAG chain with the given OpenAI API key (used for embeddings + LLM)."""
     embeddings = OpenAIEmbeddings(model="text-embedding-3-small", api_key=api_key)
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2, api_key=api_key)
+    llm = ChatOpenAI(model="gpt-5-nano", temperature=0.2, api_key=api_key)
     prompt = PromptTemplate(
         template="""You are a helpful assistant.
 Answer ONLY from the provided transcript context.
 If the context is insufficient, just say you don't know.
-When the user asks for a summary, key points, bullets, or similar,
-return a concise numbered list, one point per line, like:
-1. First point
-2. Second point
-3. Third point
-
 {context}
 
 Question: {question}

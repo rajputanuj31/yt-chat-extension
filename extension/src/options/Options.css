@@ -1,0 +1,65 @@
+.options {
+  max-width: 480px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.options h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.subtitle {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+.options label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.options input {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.options button {
+  padding: 0.5rem 1.25rem;
+  background: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.options button:hover:not(:disabled) {
+  background: #0b5ed7;
+}
+
+.options button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.error {
+  color: #dc3545;
+  margin-top: 0.5rem;
+}
+
+.options-dev-note {
+  font-size: 0.8rem;
+  color: #888;
+  background: #f5f5f5;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
