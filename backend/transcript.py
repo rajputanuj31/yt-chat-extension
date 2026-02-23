@@ -19,24 +19,43 @@ def get_transcript(video_id: str, languages: Optional[List[str]] = None) -> str:
     video_id = video_id.strip()
     if languages is None:
         languages = DEFAULT_LANGUAGES
+
+    api = YouTubeTranscriptApi()
     try:
-        api = YouTubeTranscriptApi()
+        # First, try preferred languages (English variants)
         transcript_list = api.fetch(video_id, languages=languages)
         return " ".join(chunk.text for chunk in transcript_list)
     except TranscriptsDisabled:
         # Let caller distinguish "no transcript at all" from other failures
+        print(f"[TRANSCRIPT] TranscriptsDisabled video_id={video_id}", flush=True)
         raise
     except Exception as e:
         msg = str(e)
-        # youtube_transcript_api uses this message when only other languages exist
+        # DEBUG: log full library error from Render / other hosts
+        print(
+            f"[TRANSCRIPT ERROR] video_id={video_id} languages={languages} raw_error={msg}",
+            flush=True,
+        )
+
+        # If there are transcripts but not in our preferred languages,
+        # fall back to whatever language is available (e.g. Hindi).
         if "No transcripts were found for any of the requested language codes" in msg:
-            friendly = (
-                "No transcript is available in English for this video. "
-                "Try another video with English or English auto-generated captions."
-            )
-        else:
-            friendly = (
-                "Unable to fetch the transcript for this video. "
-                "The video may not have captions or they might be blocked."
-            )
+            try:
+                fallback_list = api.fetch(video_id)
+                return " ".join(chunk.text for chunk in fallback_list)
+            except Exception as e2:
+                print(
+                    f"[TRANSCRIPT FALLBACK ERROR] video_id={video_id} raw_error={e2}",
+                    flush=True,
+                )
+                friendly = (
+                    "Unable to fetch the transcript for this video, even in its original language. "
+                    "The video may not have usable captions or they might be blocked."
+                )
+                raise ValueError(friendly) from e2
+
+        friendly = (
+            "Unable to fetch the transcript for this video. "
+            "The video may not have captions or they might be blocked."
+        )
         raise ValueError(friendly) from e
