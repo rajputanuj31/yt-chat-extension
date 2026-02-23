@@ -1,0 +1,47 @@
+############################
+# OS / Editor junk
+############################
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+############################
+# Python
+############################
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+env/
+
+############################
+# Node / JS (for extension)
+############################
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-lock.yaml
+*.tsbuildinfo
+dist/
+build/
+
+############################
+# Environment / local config
+############################
+.env
+.env.*
+!.env.example
+.python-version
+
